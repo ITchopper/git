@@ -26,13 +26,17 @@ public class CallModel : MonoBehaviour
             Destroy(t);
         }
         string dir = "Models/" + this.name + "/" + this.name;
-        string aniDir = "Animations/Walking";
+        string aniDir = "Animations/" + this.name + "/Walking";
         Vector3 pos;
 
         if (Resources.LoadAll<GameObject>(dir).Length != 0)
         {
             instance = Instantiate(Resources.Load(dir, typeof(GameObject))) as GameObject;
             instance.tag = "ModelName";
+            if(instance.GetComponent<Animator>() == null)
+            {
+                instance.AddComponent<Animator>();
+            }
             animator = instance.GetComponent<Animator>();
             Debug.Log(animator);
             instance.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(aniDir);
